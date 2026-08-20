@@ -28,3 +28,9 @@ Característica: Inicio de sesión en CiberBank
       | usuario   | clave       | mensaje                                |
       | jaime     | otraClave   | Credenciales inválidas                 |
       | bloqueado | Cibertec123 | Usuario bloqueado. Contacte a soporte  |
+
+  @login
+  Escenario: Ingreso con campos vacíos
+    Dado que Jaime está en la pantalla de login
+    Cuando ingresa el usuario "" y la contraseña ""
+    Entonces debería ver el error de campo usuario "El usuario es obligatorio"

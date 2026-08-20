@@ -13,11 +13,12 @@ import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+import net.serenitybdd.screenplay.ensure.Ensure;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 
-import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
-import static org.hamcrest.Matchers.is;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class LoginStepDefinitions {
 
@@ -47,22 +48,33 @@ public class LoginStepDefinitions {
 
     @Entonces("debería ver el saludo {string}")
     public void deberia_ver_el_saludo(String saludo) {
-        theActorInTheSpotlight().should(
-                seeThat("el saludo del dashboard", TextoDe.el(DashboardScreen.SALUDO), is(saludo))
+        theActorInTheSpotlight().attemptsTo(
+                WaitUntil.the(DashboardScreen.SALUDO, isVisible()).forNoMoreThan(10).seconds(),
+                Ensure.that(TextoDe.el(DashboardScreen.SALUDO)).isEqualTo(saludo)
         );
     }
 
     @Y("el saldo mostrado debería ser {string}")
     public void el_saldo_mostrado_deberia_ser(String saldo) {
-        theActorInTheSpotlight().should(
-                seeThat("el saldo de la cuenta principal", TextoDe.el(DashboardScreen.SALDO_PRINCIPAL), is(saldo))
+        theActorInTheSpotlight().attemptsTo(
+                WaitUntil.the(DashboardScreen.SALDO_PRINCIPAL, isVisible()).forNoMoreThan(10).seconds(),
+                Ensure.that(TextoDe.el(DashboardScreen.SALDO_PRINCIPAL)).isEqualTo(saldo)
         );
     }
 
     @Entonces("debería ver el mensaje de error {string}")
     public void deberia_ver_el_mensaje_de_error(String mensaje) {
-        theActorInTheSpotlight().should(
-                seeThat("el mensaje de error del login", TextoDe.el(LoginScreen.ERROR_LOGIN), is(mensaje))
+        theActorInTheSpotlight().attemptsTo(
+                WaitUntil.the(LoginScreen.ERROR_LOGIN, isVisible()).forNoMoreThan(10).seconds(),
+                Ensure.that(TextoDe.el(LoginScreen.ERROR_LOGIN)).isEqualTo(mensaje)
+        );
+    }
+
+    @Entonces("debería ver el error de campo usuario {string}")
+    public void deberia_ver_el_error_de_campo_usuario(String mensaje) {
+        theActorInTheSpotlight().attemptsTo(
+                WaitUntil.the(LoginScreen.ERROR_USUARIO, isVisible()).forNoMoreThan(10).seconds(),
+                Ensure.that(TextoDe.el(LoginScreen.ERROR_USUARIO)).isEqualTo(mensaje)
         );
     }
 }

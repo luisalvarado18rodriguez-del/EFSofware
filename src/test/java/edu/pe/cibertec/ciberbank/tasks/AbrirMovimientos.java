@@ -1,7 +1,7 @@
 package edu.pe.cibertec.ciberbank.tasks;
 
 import edu.pe.cibertec.ciberbank.userinterface.DashboardScreen;
-import edu.pe.cibertec.ciberbank.userinterface.ServiciosScreen;
+import edu.pe.cibertec.ciberbank.userinterface.MovimientosScreen;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -9,17 +9,17 @@ import net.serenitybdd.screenplay.waits.WaitUntil;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-public class AbrirPagoDeServicio implements Task {
+public class AbrirMovimientos implements Task {
 
-    public static AbrirPagoDeServicio desdeElDashboard() {
-        return new AbrirPagoDeServicio();
+    public static AbrirMovimientos desdeElDashboard() {
+        return new AbrirMovimientos();
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Click.on(DashboardScreen.BOTON_SERVICIOS),
-                WaitUntil.the(ServiciosScreen.BOTON_CONSULTAR, isVisible()).forNoMoreThan(30).seconds()
+                Click.on(DashboardScreen.BOTON_MOVIMIENTOS),
+                WaitUntil.the(MovimientosScreen.LISTA, isVisible()).forNoMoreThan(30).seconds()
         );
     }
 }
